@@ -1,0 +1,91 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Post List{% endblock %}
+
+{% block content %}
+<section class="post-list-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                {% if request.resolver_match.url_name == 'post_draft_list' %}
+                    <header class="drafts-header text-center mb-5">
+                        <h1 class="drafts-title display-4 mb-3">
+                            <i class="bi bi-file-earmark-text"></i> Draft Posts
+                        </h1>
+                        <p class="drafts-subtitle text-muted">
+                            Your unpublished works in progress
+                        </p>
+                    </header>
+                {% else %}
+                    <div class="post-list-header mb-5 text-center">
+                        <h1 class="section-title">Latest Blog Posts</h1>
+                        <p class="section-subtitle">Discover our newest stories and insights</p>
+                    </div>
+                {% endif %}
+                
+                <div class="post-list-container">
+                    {% for post in post_list %}
+                        <article class="post-card card mb-4 overflow-hidden border-0 shadow-hover">
+                            <div class="card-body p-4">
+                                <div class="post-meta d-flex align-items-center mb-3">
+                                    <span class="post-date me-3">
+                                        <i class="bi bi-calendar-check me-2"></i>
+                                        {{ post.published_date|date:'M d, Y' }}
+                                    </span>
+                                    <span class="post-comment-count">
+                                        <i class="bi bi-chat-dots me-2"></i>
+                                        {{ post.approve_comments.count }} Comments
+                                    </span>
+                                </div>
+                                
+                                <h2 class="post-title mb-3">
+                                    <a href="{% url 'post_detail' pk=post.pk %}" class="text-decoration-none stretched-link">
+                                        {{ post.title }}
+                                    </a>
+                                </h2>
+                                
+                                <div class="post-excerpt mb-4">
+                                    <p>{{ post.text|striptags|truncatewords:30 }}</p>
+                                </div>
+                                
+                                <div class="post-footer d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-read-more">
+                                        Read More <i class="bi bi-arrow-right ms-2"></i>
+                                    </a>
+                                    <span class="post-read-time text-muted">
+                                        <i class="bi bi-clock"></i> 5 min read
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    {% empty %}
+                        <div class="no-posts-message text-center py-5">
+                            <div class="no-posts-icon mb-4">
+                                <i class="bi bi-pencil-square"></i>
+                            </div>
+                            <h3 class="no-posts-title mb-3">No Posts Available</h3>
+                            <p class="no-posts-text mb-4">Our writers are busy crafting amazing content. Check back soon!</p>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'post_new' %}" class="btn btn-create-post">
+                                    <i class="bi bi-plus-circle me-2"></i> Create Your First Post
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Add animation order for staggered effects
+    document.addEventListener('DOMContentLoaded', function() {
+        const postCards = document.querySelectorAll('.post-card');
+        postCards.forEach((card, index) => {
+            card.style.setProperty('--animation-order', index);
+        });
+    });
+    </script>
+    
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Draft Posts | MyBlog{% endblock %}
+
+{% block content %}
+<section class="drafts-section py-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Drafts List -->
+                {% if posts %}
+                    <div class="drafts-grid">
+                        <div class="row g-4">
+                            {% for post in posts %}
+                            <div class="col-md-6 col-lg-4">
+                                <article class="draft-card card border-0 shadow-sm h-100">
+                                    <div class="card-body p-4">
+                                        <div class="draft-meta d-flex justify-content-between align-items-center mb-3">
+                                            <span class="draft-date badge bg-light text-dark">
+                                                <i class="bi bi-calendar me-1"></i>
+                                                {{ post.created_date|date:"M d, Y" }}
+                                            </span>
+                                            <span class="draft-status badge bg-warning text-dark">
+                                                Draft
+                                            </span>
+                                        </div>
+                                        <h2 class="draft-title h4 mb-3">
+                                            <a href="{% url 'post_draft_detail' pk=post.pk %}" class="text-decoration-none stretched-link">
+                                                {{ post.title }}
+                                            </a>
+                                        </h2>
+                                        <div class="draft-excerpt mb-3">
+                                            <p class="mb-0">{{ post.text|truncatechars:200 }}</p>
+                                        </div>
+                                        <div class="draft-actions mt-auto pt-3">
+                                            <a href="{% url 'post_draft_detail' pk=post.pk %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil me-1"></i> Continue Editing
+                                            </a>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-drafts text-center py-5">
+                        <div class="no-drafts-icon mb-4">
+                            <i class="bi bi-file-earmark-text fs-1 text-muted"></i>
+                        </div>
+                        <h2 class="h4 text-light mb-3">No Drafts Found</h2>
+                        <p class="text-muted mb-4">You don't have any saved drafts yet.</p>
+                        <a href="{% url 'post_new' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i> Create New Draft
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

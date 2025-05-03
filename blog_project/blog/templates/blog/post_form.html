@@ -1,0 +1,82 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{% if form.instance.pk %}Edit Post{% else %}New Post{% endif %}{% endblock %}
+
+{% block content %}
+<section class="post-form-section py-4 py-lg-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <!-- Form Card -->
+                <div class="post-form-card card border-0 shadow-lg">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Form Header -->
+                        <header class="form-header text-center mb-4">
+                            <h1 class="form-title display-5 mb-3">
+                                <i class="bi bi-pencil-square"></i>
+                                {% if form.instance.pk %}Edit Your Post{% else %}Create New Post{% endif %}
+                            </h1>
+                            <p class="form-subtitle text-muted">
+                                Share your knowledge and ideas with the community
+                            </p>
+                        </header>
+
+                        <!-- Post Form -->
+                        <form method="POST" class="post-form">
+                            {% csrf_token %}
+                            
+                            <!-- Title Field -->
+                            <div class="form-group mb-4">
+                                <label for="id_title" class="form-label">
+                                    <i class="bi bi-card-heading me-2"></i>Post Title
+                                </label>
+                                {{ form.title }}
+                            </div>
+                            
+                            <!-- Content Field -->
+                            <div class="form-group mb-4">
+                                <label for="id_text" class="form-label">
+                                    <i class="bi bi-text-paragraph me-2"></i>Post Content
+                                </label>
+                                {{ form.text }}
+                                <small class="form-text text-muted mt-2">
+                                    Write your content here. You can format text using the toolbar.
+                                </small>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div class="form-actions mt-5 pt-3 border-top">
+                                <button type="submit" class="btn btn-primary btn-submit w-100 py-3">
+                                    <i class="bi bi-save me-2"></i>
+                                    {% if form.instance.pk %}Update Post{% else %}Save Post{% endif %}
+                                </button>
+                                <a href="{% if form.instance.pk %}{% url 'post_detail' pk=form.instance.pk %}{% else %}{% url 'post_list' %}{% endif %}" 
+                                   class="btn btn-outline-secondary w-100 mt-3">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    // Initialize MediumEditor
+    document.addEventListener('DOMContentLoaded', function() {
+        var editor = new MediumEditor('.medium-editor-textarea', {
+            toolbar: {
+                buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'quote', 'orderedlist', 'unorderedlist']
+            },
+            placeholder: {
+                text: 'Write something amazing...',
+                hideOnClick: true
+            }
+        });
+    });
+</script>
+{% endblock %}

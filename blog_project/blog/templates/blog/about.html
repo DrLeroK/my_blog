@@ -1,0 +1,135 @@
+{% extends "blog/base.html" %}
+
+{% block title %}About Us | MyBlog{% endblock %}
+
+{% block content %}
+<section class="about-hero py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="hero-title display-4 fw-bold mb-4">Our Story</h1>
+                <p class="hero-subtitle lead mb-5">
+                    Crafting meaningful content that inspires and informs
+                </p>
+                <div class="hero-divider mx-auto mb-5"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-mission py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="mission-image">
+                    <div class="image-wrapper rounded-4 overflow-hidden shadow-lg">
+                        <div class="placeholder-image d-flex align-items-center justify-content-center">
+                            <i class="bi bi-journal-text display-1 text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="section-title mb-4">Our Mission</h2>
+                <p class="mission-text mb-4">
+                    We're dedicated to creating a platform where knowledge meets creativity. Our blog serves as a hub for 
+                    developers, designers, and curious minds to explore, learn, and grow together.
+                </p>
+                <ul class="mission-list list-unstyled">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
+                        <span>Deliver high-quality, well-researched content</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
+                        <span>Foster a community of learning and sharing</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-primary me-3 mt-1"></i>
+                        <span>Provide practical insights for real-world challenges</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-team py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title mb-3">Meet Our Team</h2>
+                <p class="section-subtitle text-muted">
+                    Passionate individuals dedicated to bringing you the best content
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="team-card card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="team-avatar mx-auto mb-3">
+                            <i class="bi bi-person-circle display-4 text-primary"></i>
+                        </div>
+                        <h3 class="team-name h5 mb-2">Jane Doe</h3>
+                        <p class="team-position text-muted small mb-3">Founder & Editor</p>
+                        <p class="team-bio small">
+                            Technology enthusiast with 10+ years of experience in web development and content creation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="team-card card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="team-avatar mx-auto mb-3">
+                            <i class="bi bi-person-circle display-4 text-primary"></i>
+                        </div>
+                        <h3 class="team-name h5 mb-2">John Smith</h3>
+                        <p class="team-position text-muted small mb-3">Lead Writer</p>
+                        <p class="team-bio small">
+                            Passionate about making complex topics accessible to everyone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="team-card card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="team-avatar mx-auto mb-3">
+                            <i class="bi bi-person-circle display-4 text-primary"></i>
+                        </div>
+                        <h3 class="team-name h5 mb-2">Alex Johnson</h3>
+                        <p class="team-position text-muted small mb-3">Design Specialist</p>
+                        <p class="team-bio small">
+                            Creating beautiful, user-friendly experiences through thoughtful design.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-cta py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="cta-title mb-4">Ready to join our community?</h2>
+                <p class="cta-text mb-5">
+                    Whether you want to contribute, collaborate, or just stay updated, we'd love to hear from you.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="#" class="btn btn-light btn-lg px-4">
+                        <i class="bi bi-envelope me-2"></i> Contact Us
+                    </a>
+                    <a href="{% url 'post_list' %}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-book me-2"></i> Explore Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

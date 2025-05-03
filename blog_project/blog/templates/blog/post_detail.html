@@ -1,0 +1,134 @@
+{% extends "blog/base.html" %}
+{% load custom_filters %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<section class="post-detail-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <!-- Main Post Card -->
+                <article class="post-detail-card card border-0 shadow-lg mb-5">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Post Header -->
+                        <header class="post-header mb-4">
+                            <h1 class="post-title display-4 mb-3">{{ post.title }}</h1>
+                            
+                            <div class="post-meta d-flex flex-wrap align-items-center gap-3 mb-4">
+                                {% if post.published_date %}
+                                    <span class="post-date badge bg-light text-dark">
+                                        <i class="bi bi-calendar-check me-2"></i>
+                                        {{ post.published_date|date:"F j, Y" }}
+                                    </span>
+                                {% else %}
+                                    <a class="btn btn-publish btn-sm" href="{% url 'post_publish' pk=post.pk %}">
+                                        <i class="bi bi-upload me-1"></i> Publish
+                                    </a>
+                                {% endif %}
+                                
+                                <span class="post-read-time badge bg-light text-dark">
+                                    <i class="bi bi-clock me-2"></i>
+                                    {{ post.text|wordcount|divide:200 }} min read
+                                </span>
+                            </div>
+                        </header>
+
+                        <!-- Post Content -->
+                        <div class="post-content">
+                            <div class="content-body">
+                                {{ post.text|safe|linebreaksbr }}
+                            </div>
+                        </div>
+
+                        <!-- Post Actions -->
+                        {% if user.is_authenticated %}
+                        <footer class="post-actions mt-5 pt-3 border-top">
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-edit" href="{% url 'post_edit' pk=post.pk %}">
+                                    <i class="bi bi-pencil-square me-2"></i> Edit Post
+                                </a>
+                                <a class="btn btn-delete" href="{% url 'post_remove' pk=post.pk %}">
+                                    <i class="bi bi-trash me-2"></i> Delete
+                                </a>
+                            </div>
+                        </footer>
+                        {% endif %}
+                    </div>
+                </article>
+
+                <!-- Comments Section -->
+                <section class="comments-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="comments-title mb-0">
+                            <i class="bi bi-chat-square-text me-2"></i>
+                            Comments
+                            <span class="badge bg-primary rounded-pill ms-2">{{ post.comments.count }}</span>
+                        </h2>
+                        <a class="btn btn-add-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">
+                            <i class="bi bi-plus-circle me-2"></i> Add Comment
+                        </a>
+                    </div>
+
+                    {% if post.comments.all %}
+                        <div class="comments-list">
+                            {% for comment in post.comments.all %}
+                                {% if user.is_authenticated or comment.approved_comment %}
+                                <div class="comment-card card mb-3 {% if not comment.approved_comment %}comment-unapproved{% endif %}">
+                                    <div class="card-body p-4">
+                                        <div class="comment-header d-flex justify-content-between mb-3">
+                                            <div class="comment-author d-flex align-items-center">
+                                                <div class="comment-avatar me-3">
+                                                    <i class="bi bi-person-circle fs-3"></i>
+                                                </div>
+                                                <div>
+                                                    <h5 class="comment-author-name mb-0">{{ comment.author }}</h5>
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-clock me-1"></i>
+                                                        {{ comment.created_date|timesince }} ago
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            {% if not comment.approved_comment %}
+                                                <span class="badge bg-warning text-dark">Pending Approval</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="comment-text">
+                                            {{ comment.text|safe|linebreaks }}
+                                        </div>
+                                        
+                                        {% if not comment.approved_comment and user.is_authenticated %}
+                                        <div class="comment-actions mt-3 pt-2 border-top">
+                                            <div class="d-flex gap-2">
+                                                <a class="btn btn-sm btn-approve" href="{% url 'comment_approve' pk=comment.pk %}">
+                                                    <i class="bi bi-check-circle me-1"></i> Approve
+                                                </a>
+                                                <a class="btn btn-sm btn-reject" href="{% url 'comment_remove' pk=comment.pk %}">
+                                                    <i class="bi bi-trash me-1"></i> Reject
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="no-comments text-center py-5">
+                            <i class="bi bi-chat-square-text fs-1 text-muted mb-3"></i>
+                            <h3 class="h5 text-muted">No comments yet</h3>
+                            <p class="text-muted">Be the first to share your thoughts!</p>
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+

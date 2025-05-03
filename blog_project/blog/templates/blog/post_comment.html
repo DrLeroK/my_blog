@@ -1,0 +1,56 @@
+{% extends "blog/base.html" %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block content %}
+<div class="comment-page-container">
+    <div class="comment-form-wrapper">
+        <div class="comment-form-header">
+            <i class="bi bi-chat-square-quote"></i>
+            <h2>Share Your Thoughts</h2>
+            <p class="text-muted">We'd love to hear from you</p>
+        </div>
+
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_author">Your Name</label>
+                {{ form.author }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_text">Your Comment</label>
+                {{ form.text }}
+                <small class="form-text">Markdown formatting supported</small>
+            </div>
+
+            <button type="submit" class="submit-comment-btn">
+                <i class="bi bi-send"></i> Post Comment
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var editor = new MediumEditor('#id_text', {
+            toolbar: {
+                buttons: ['bold', 'italic', 'underline', 'quote', 'anchor']
+            },
+            placeholder: {
+                text: 'Write your thoughtful comment here...',
+                hideOnClick: true
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+
+
+
+
+
