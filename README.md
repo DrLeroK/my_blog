@@ -31,7 +31,7 @@ A full-featured blogging platform built with Django that allows users to create,
 |-----------------------------------|--------------------------------------|
 | *Blog Homepage*                   | *No Post*                           |
 
-| ![Login](screenshots/login.PNG) | ![Posts](screenshots/post_list.PNG)     |
+| ![Login](screenshots/login.PNG) | ![Posts](screenshots/posts_list.PNG)     |
 |---------------------------------|-----------------------------------------|
 | *User Login*                    | *Post list*                        |
 
